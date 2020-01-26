@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+		<title>Number Predict</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+		<style>
+			body{margin: 0px;font-size: 14px;font-family: 'Open Sans', sans-serif;}
+			.number-predict_block{display: flex;flex: 1;flex-direction: column;align-items: center;justify-content: center;position: fixed;height: 100%;width: 100%;}
+			p{margin: 0px;}
+			.button{border-radius: 2px;height: 32px;padding: 0 16px;border: 1px solid #F37921;text-align: center;background: #F37921;margin: 10px 0;cursor: pointer;color: #fff;text-transform: capitalize;font-weight: 600;outline: none;}
+			.input-box{padding: 5px 10px;min-width: 200px;margin-left: 10px;}
+			.guess-block{display: flex;flex-direction: row;align-items: center;}
+			#error_display{color: red;margin: 5px 0 0;}
+			#guess_message, #final_message{color: #000;margin-bottom: 10px;}
+			.heading-txt{margin: 0px 0px 10px;}
+			.instruct-txt{margin-bottom: 10px;}
+			.result-box{margin: 10px 0 0;}
+			.button:disabled{background: #D6D7D7;border: 1px solid #D6D7D7;color: #666;cursor: default;}
+		</style>
+	</head>
+	<body>
+		<div class='number-predict_block'>
+			<h1 class="heading-txt">I am thinking of a number from 1 to 10.</h1>
+			<p class="instruct-txt">You must guess what it is in 3 tries.</p>
+			<div class="guess-block">
+				<p>Enter a guess:</p> 
+				<input type= "number" placeholder="enter a value between 1 to 10" id="predict_number" min="1" max="10" class="input-box">  
+			</div>
+			<div class="result-box">
+					<span id="guess_message" style="display:none"></span>
+					<span id="final_message" style="display:none"></span>
+			</div>
+			<div>
+				<span id="error_display" style="display:none"> please enter a valid number from 1 to 10</span>
+			</div>
+		
+			<input type="button" value="guess it" onclick="isGuessCorrect()" id="guess_submit" class="button"/>
+			
+		</div>
+		
+		<script type="text/javascript">
+			var number_of_retries = 0;
+			var total_retries_allowed = 3;
+			var predicted_number = Math.floor(Math.random() * 10) + 1;
+			var number_text = ["first", "second", "last"];
+			function isGuessCorrect(){
+				var user_guess = document.querySelector('#predict_number').value;
+				if (!user_guess || user_guess < 1 || user_guess > 10) {
+					document.getElementById('error_display').style.display = 'block';
+					document.getElementById('guess_message').style.display = 'none';
+					document.getElementById('final_message').style.display = 'none';
+				}
+				else {
+					number_of_retries += 1; 
+					document.querySelector('#error_display').style.display = 'none';
+						var difference = Math.abs(user_guess - predicted_number);
+						var predict_status = "";
+						if (difference >= 3){
+							predict_status = " ( cold )";
+						}else if(difference == 2){
+							predict_status = " ( warm )";
+						}else if(difference == 1){
+							predict_status = " ( hot )";
+						}
+						document.getElementById('guess_message').textContent = "Your "+ number_text[number_of_retries - 1] + " guess is : " + user_guess + predict_status;
+					//}
+					document.getElementById('guess_message').style.display = 'block';
+					document.getElementById('final_message').style.display = 'block';
+					if (user_guess == predicted_number){
+						disableGuessButton();
+					}
+					else if (number_of_retries == total_retries_allowed){
+						disableGuessButton("error");
+					}else {
+						document.getElementById('final_message').textContent = "You have " + (total_retries_allowed - number_of_retries) + ' ' + "left. please try one more time.";
+						document.getElementById("predict_number").value = "";
+					}
+		
+		
+				}
+			}
+			function disableGuessButton(error){
+				document.querySelector("#guess_submit").disabled = true;
+				document.querySelector("#predict_number").disabled = true;
+				if (error){
+					document.querySelector('#final_message').textContent = "Your retires are exceeded, failed to guess the correct number";
+				}else {
+					document.querySelector('#final_message').textContent = "Right! You have won the game";
+				}
+			}
+		</script>
+	</body>
+</html>
+
