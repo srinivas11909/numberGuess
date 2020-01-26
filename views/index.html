@@ -9,8 +9,8 @@
 			body{margin: 0px;font-size: 14px;font-family: 'Open Sans', sans-serif;}
 			.number-predict_block{display: flex;flex: 1;flex-direction: column;align-items: center;justify-content: center;position: fixed;height: 100%;width: 100%;}
 			p{margin: 0px;}
-			.button{border-radius: 2px;height: 32px;padding: 0 16px;border: 1px solid #F37921;text-align: center;background: #F37921;margin: 10px 0;cursor: pointer;color: #fff;text-transform: capitalize;font-weight: 600;outline: none;}
-			.input-box{padding: 5px 10px;min-width: 200px;margin-left: 10px;}
+			.button{border-radius: 2px;height: 32px;padding: 0 16px;border: 1px solid #F37921;text-align: center;background: #F37921;cursor: pointer;color: #fff;text-transform: capitalize;font-weight: 600;outline: none;}
+			.input-box{padding: 5px 10px;min-width: 200px;margin:0px 10px;}
 			.guess-block{display: flex;flex-direction: row;align-items: center;}
 			#error_display{color: red;margin: 5px 0 0;}
 			#guess_message, #final_message{color: #000;margin-bottom: 10px;}
@@ -22,11 +22,13 @@
 	</head>
 	<body>
 		<div class='number-predict_block'>
+			<div>
 			<h1 class="heading-txt">I am thinking of a number from 1 to 10.</h1>
 			<p class="instruct-txt">You must guess what it is in 3 tries.</p>
 			<div class="guess-block">
 				<p>Enter a guess:</p> 
-				<input type= "number" placeholder="enter a value between 1 to 10" id="predict_number" min="1" max="10" class="input-box">  
+				<input type= "number" placeholder="enter a value between 1 to 10" id="predict_number" min="1" max="10" class="input-box" />   
+				<input type="button" value="guess it" onclick="isGuessCorrect()" id="guess_submit" class="button"/>
 			</div>
 			<div class="result-box">
 					<span id="guess_message" style="display:none"></span>
@@ -35,8 +37,8 @@
 			<div>
 				<span id="error_display" style="display:none"> please enter a valid number from 1 to 10</span>
 			</div>
-		
-			<input type="button" value="guess it" onclick="isGuessCorrect()" id="guess_submit" class="button"/>
+		</div>
+			
 			
 		</div>
 		
